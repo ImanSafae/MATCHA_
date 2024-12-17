@@ -1,0 +1,75 @@
+version: '3.8'
+
+services:
+  db:
+    container_name: matcha-db
+    image: postgis/postgis:latest
+    environment:
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: ${DATABASE_NAME}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./server/database/init.sql:/docker-entrypoint-initdb.d/init.sql 
+    ports:
+      - "5432:5432" 
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DATABASE_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - internal
+    restart: always
+
+  server:
+    container_name: matcha-server
+    build: ./server
+    environment:
+      - DATABASE_HOST=db
+      - DATABASE_USER=${DATABASE_USER}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - DATABASE_NAME=${DATABASE_NAME}
+      - PICTURES_FOLDER=${PICTURES_FOLDER}
+      - PICTURES_REPO_URL=${PICTURES_REPO_URL}
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./server:/app
+      - server_node_modules:/app/node_modules
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+    networks: 
+      - internal
+    restart: always
+
+  client:
+    container_name: matcha-client
+    build: ./client
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./client:/app
+      - client_node_modules:/app/node_modules
+    env_file:
+      - .env
+    depends_on:
+      - server
+    networks:
+      - internal
+      - external
+    restart: always
+
+networks:
+  internal:
+    driver: bridge
+  external:
+    driver: bridge
+
+volumes:
+  postgres-data:
+  server_node_modules:
+  client_node_modules:

@@ -1,0 +1,21 @@
+{
+  "REGISTER_SUCCESSFUL": "Thank you for registering! Please check your email to confirm your address and complete your registration.",
+  "USERNAME_NOT_AVAILABLE": "Username unavailable.",
+  "INVALID_DATA": "Invalid data.",
+  "INVALID_EMAIL": "Invalid email.",
+  "INTERNAL_SERVER_ERROR": "Internal servor error.",
+  "EMAIL_NOT_AVAILABLE": "Email unavailable.",
+  "EMAIL_NOT_VALIDATED": "Email not validated",
+  "LOGIN_SUCCESS": "Log In successful, you're going to be redirect to Home Page.",
+  "PASSWORD_RECOVER": "If the email address you entered is valid you will receive an email to reinitialize your password.",
+  "USER_FOUND": "User found.",
+  "USER_NOT_FOUND": "There is no user found.",
+  "UUID_HAS_EXPIRED": "Your recovery link is too old, try \"Forgot Password ?\" again.",
+  "VALID_UUID": "Valid UUID.",
+  "INVALID_PASSWORD": "Password not valid.",
+  "PASSWORD_RECOVERED": "Password successfully changed.",
+  "USER_UPDATED": "User successfully updated.",
+  "PICTURES_FOUND": "Pictures found.",
+  "PICTURES_NOT_FOUND": "Pictures not found",
+  "MISSING_PARAMETER": "Missing parameter"
+}
